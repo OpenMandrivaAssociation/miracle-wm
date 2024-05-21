@@ -1,3 +1,5 @@
+%define _disable_lto 1
+
 Name:           miracle-wm
 Version:        0.2.1
 Release:        1
