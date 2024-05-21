@@ -28,7 +28,7 @@ those compositors, like swayfx.
 %autosetup -p1
 
 %build
-%cmake
+%cmake -GTEST_INCLUDE_DIR=/usr/include/gtest/
 %make_build
 
 %install
