@@ -28,8 +28,6 @@ those compositors, like swayfx.
 %autosetup -p1
 
 %build
-export CC=gcc
-export CXX=g++
 %cmake -DGTEST_INCLUDE_DIR=/usr/include/gtest/ -DGTEST_LIBRARY=/usr/lib64/libgtest.so -DGTEST_MAIN_LIBRARY=/usr/lib64/libgtest_main.so
 %make_build
 
