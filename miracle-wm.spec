@@ -8,6 +8,7 @@ URL:            https://github.com/mattkae/miracle-wm
 Source0:        https://github.com/mattkae/miracle-wm/archive/v%{version}/%{name}-%{version}.tar.gz
 
 BuildRequires:  pkgconfig(miral)
+BuildRequires:  pkgconfig(egl)
 BuildRequires:  pkgconfig(glib-2.0)
 BuildRequires:  pkgconfig(yaml-cpp)
 BuildRequires:  pkgconfig(libevdev)
