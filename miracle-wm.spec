@@ -19,7 +19,10 @@ BuildRequires:  pkgconfig(xkbcommon)
 BuildRequires:  desktop-file-utils
 BuildRequires:	cmake(GTest)
 
-BuildSystem:	cmake
+BuildSystem:  cmake
+BuildOption:  -DGTEST_INCLUDE_DIR=/usr/include/gtest/ 
+BuildOption:  -DGTEST_LIBRARY=/usr/lib64/libgtest.so 
+BuildOption:  -DGTEST_MAIN_LIBRARY=/usr/lib64/libgtest_main.so
 
 %description
 miracle-wm is a Wayland compositor based on Mir. It features a tiling window 
