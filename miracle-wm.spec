@@ -11,6 +11,7 @@ BuildRequires:  pkgconfig(miral)
 BuildRequires:  pkgconfig(egl)
 BuildRequires:  pkgconfig(glib-2.0)
 BuildRequires:  pkgconfig(yaml-cpp)
+BuildRequires:  pkgconfig(yaml-0.1)
 BuildRequires:  pkgconfig(libevdev)
 BuildRequires:  cmake(nlohmann_json) >= 3.2.0
 BuildRequires:  pkgconfig(libnotify)
