@@ -1,3 +1,5 @@
+%define _disable_lto 1
+
 Name:           miracle-wm
 Version:        0.3.4
 Release:        1
@@ -35,7 +37,7 @@ those compositors, like swayfx.
 
 %prep -a
 # Don't force gcc -- especially not while its LTO is broken and clang's works
-sed -i -e 's,^set(CMAKE_CXX_COMPILER,# set(CMAKE_CXX_COMPILER,' CMakeLists.txt tests/CMakeLists.txt
+#sed -i -e 's,^set(CMAKE_CXX_COMPILER,# set(CMAKE_CXX_COMPILER,' CMakeLists.txt tests/CMakeLists.txt
 
 %files
 %license LICENSE
