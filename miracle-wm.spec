@@ -10,12 +10,12 @@ Source0:        https://github.com/mattkae/miracle-wm/archive/v%{version}/%{name
 BuildRequires:  pkgconfig(miral)
 BuildRequires:  pkgconfig(egl)
 BuildRequires:  pkgconfig(glib-2.0)
+BuildRequires:  pkgconfig(glm)
 BuildRequires:  pkgconfig(yaml-cpp)
 BuildRequires:  pkgconfig(yaml-0.1)
 BuildRequires:  pkgconfig(libevdev)
 BuildRequires:  cmake(nlohmann_json) >= 3.2.0
 BuildRequires:  pkgconfig(libnotify)
-BuildRequires:  cmake(gtest)
 BuildRequires:  pkgconfig(xkbcommon)
 BuildRequires:  desktop-file-utils
 BuildRequires:	gtest-devel
