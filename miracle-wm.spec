@@ -1,5 +1,5 @@
 Name:           miracle-wm
-Version:        0.3.2
+Version:        0.3.4
 Release:        1
 Summary:        A tiling Wayland compositor based on Mir 
 Group:          Desktop/WM
