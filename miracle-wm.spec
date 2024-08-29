@@ -18,7 +18,7 @@ BuildRequires:  pkgconfig(libnotify)
 BuildRequires:  cmake(gtest)
 BuildRequires:  pkgconfig(xkbcommon)
 BuildRequires:  desktop-file-utils
-BuildRequires:	cmake(GTest)
+BuildRequires:	gtest-devel
 
 BuildSystem:  cmake
 BuildOption:  -DGTEST_INCLUDE_DIR=/usr/include/gtest/ 
