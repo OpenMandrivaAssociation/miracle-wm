@@ -18,7 +18,7 @@ BuildRequires:  cmake(nlohmann_json) >= 3.2.0
 BuildRequires:  pkgconfig(libnotify)
 BuildRequires:  pkgconfig(xkbcommon)
 BuildRequires:  desktop-file-utils
-BuildRequires:  cmake(boost)
+BuildRequires:  %{_lib}boost-core-devel
 BuildRequires:	gtest-devel
 
 BuildSystem:  cmake
