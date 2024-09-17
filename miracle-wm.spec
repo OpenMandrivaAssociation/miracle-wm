@@ -17,6 +17,7 @@ BuildRequires:  pkgconfig(yaml-cpp)
 BuildRequires:  pkgconfig(yaml-0.1)
 BuildRequires:  pkgconfig(libevdev)
 BuildRequires:  cmake(nlohmann_json) >= 3.2.0
+BuildRequires:  pkgconfig(json-c)
 BuildRequires:  pkgconfig(libnotify)
 BuildRequires:  pkgconfig(xkbcommon)
 BuildRequires:  desktop-file-utils
