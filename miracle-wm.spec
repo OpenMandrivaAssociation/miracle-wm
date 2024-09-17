@@ -45,4 +45,6 @@ those compositors, like swayfx.
 %license LICENSE
 %{_bindir}/miracle-wm
 %{_bindir}/miracle-wm-sensible-terminal
+%{_bindir}/miracle-wm-session
+%{_bindir}/miraclemsg
 %{_datadir}/wayland-sessions/miracle-wm.desktop
