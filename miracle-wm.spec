@@ -12,6 +12,7 @@ Source0:        https://github.com/mattkae/miracle-wm/archive/v%{version}/%{name
 BuildRequires:  pkgconfig(miral)
 BuildRequires:  pkgconfig(egl)
 BuildRequires:  pkgconfig(glib-2.0)
+BuildRequires:  pkgconfig(gbm)
 BuildRequires:  pkgconfig(glm)
 BuildRequires:  pkgconfig(yaml-cpp)
 BuildRequires:  pkgconfig(yaml-0.1)
