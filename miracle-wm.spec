@@ -42,6 +42,7 @@ those compositors, like swayfx.
 #sed -i -e 's,^set(CMAKE_CXX_COMPILER,# set(CMAKE_CXX_COMPILER,' CMakeLists.txt tests/CMakeLists.txt
 
 %install -a
+rm -rf %{buildroot}//usr/include/gtest/
 rm -rf %{buildroot}/usr/include/gmock/
 rm -rf %{buildroot}/usr/lib64/cmake/GTest/
 rm -rf %{buildroot}/usr/lib64/libgmock*
