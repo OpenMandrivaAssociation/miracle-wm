@@ -41,6 +41,14 @@ those compositors, like swayfx.
 # Don't force gcc -- especially not while its LTO is broken and clang's works
 #sed -i -e 's,^set(CMAKE_CXX_COMPILER,# set(CMAKE_CXX_COMPILER,' CMakeLists.txt tests/CMakeLists.txt
 
+rm -f %{buildroot}/usr/include/gmock/
+rm -f %{buildroot}/usr/lib64/cmake/GTest/
+rm -f %{buildroot}/usr/lib64/libgmock*
+rm -f %{buildroot}/usr/lib64/libgtest*
+rm -f %{buildroot}/usr/lib64/pkgconfig/gmock*
+rm -f %{buildroot}/usr/lib64/pkgconfig/gtest*
+
+
 %files
 %license LICENSE
 %{_bindir}/miracle-wm
