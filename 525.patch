@@ -1,0 +1,133 @@
+From b78fc7704fdac508b0408114ef402614ff91454c Mon Sep 17 00:00:00 2001
+From: Matthew Kosarek <matt.kosarek@canonical.com>
+Date: Sat, 31 May 2025 10:48:34 -0400
+Subject: [PATCH] task: adding and removing new methods for Mir 2.21
+
+---
+ src/forwarding_surface.cpp | 9 +++++++++
+ src/forwarding_surface.h   | 5 +++++
+ src/renderer.h             | 3 +++
+ tests/mock_surface.h       | 3 +++
+ tests/stub_surface.h       | 7 ++++++-
+ 5 files changed, 26 insertions(+), 1 deletion(-)
+
+diff --git a/src/forwarding_surface.cpp b/src/forwarding_surface.cpp
+index b50aee18..b3bd08a9 100644
+--- a/src/forwarding_surface.cpp
++++ b/src/forwarding_surface.cpp
+@@ -116,10 +116,12 @@ mir::geometry::Displacement ForwardingSurface::content_offset() const
+     return surface_->content_offset();
+ }
+ 
++#if (MIR_SERVER_MAJOR_VERSION > 2) || (MIR_SERVER_MAJOR_VERSION == 2 && MIR_SERVER_MINOR_VERSION <= 20)
+ std::shared_ptr<mir::frontend::BufferStream> ForwardingSurface::primary_buffer_stream() const
+ {
+     return surface_->primary_buffer_stream();
+ }
++#endif
+ 
+ const mir::wayland::Weak<mir::frontend::WlSurface>& ForwardingSurface::wayland_surface()
+ {
+@@ -297,6 +299,13 @@ void ForwardingSurface::set_streams(const std::list<mir::scene::StreamInfo>& str
+     surface_->set_streams(streams);
+ }
+ 
++#if (MIR_SERVER_MAJOR_VERSION > 2) || (MIR_SERVER_MAJOR_VERSION == 2 && MIR_SERVER_MINOR_VERSION >= 21)
++std::list<mir::scene::StreamInfo> ForwardingSurface::get_streams() const
++{
++    return surface_->get_streams();
++}
++#endif
++
+ void ForwardingSurface::set_confine_pointer_state(MirPointerConfinementState state)
+ {
+     surface_->set_confine_pointer_state(state);
+diff --git a/src/forwarding_surface.h b/src/forwarding_surface.h
+index 772a051d..ce00a552 100644
+--- a/src/forwarding_surface.h
++++ b/src/forwarding_surface.h
+@@ -42,7 +42,9 @@ class ForwardingSurface : public mir::scene::Surface, public std::enable_shared_
+     void consume(const std::shared_ptr<MirEvent const>& event) override;
+     auto visible_on_lock_screen() const -> bool override;
+     auto content_offset() const -> mir::geometry::Displacement override;
++#if (MIR_SERVER_MAJOR_VERSION > 2) || (MIR_SERVER_MAJOR_VERSION == 2 && MIR_SERVER_MINOR_VERSION <= 20)
+     auto primary_buffer_stream() const -> std::shared_ptr<mir::frontend::BufferStream> override;
++#endif
+     auto wayland_surface() -> const mir::wayland::Weak<mir::frontend::WlSurface>& override;
+     void register_interest(const std::weak_ptr<mir::scene::SurfaceObserver>& observer) override;
+     void register_interest(const std::weak_ptr<mir::scene::SurfaceObserver>& observer, mir::Executor& executor) override;
+@@ -79,6 +81,9 @@ class ForwardingSurface : public mir::scene::Surface, public std::enable_shared_
+     int query(MirWindowAttrib attrib) const override;
+     void rename(const std::string& title) override;
+     void set_streams(const std::list<mir::scene::StreamInfo>& streams) override;
++#if (MIR_SERVER_MAJOR_VERSION > 2) || (MIR_SERVER_MAJOR_VERSION == 2 && MIR_SERVER_MINOR_VERSION >= 21)
++    std::list<mir::scene::StreamInfo> get_streams() const override;
++#endif
+     void set_confine_pointer_state(MirPointerConfinementState state) override;
+     MirPointerConfinementState confine_pointer_state() const override;
+     void placed_relative(const mir::geometry::Rectangle& placement) override;
+diff --git a/src/renderer.h b/src/renderer.h
+index 1a7d68fd..631dd058 100644
+--- a/src/renderer.h
++++ b/src/renderer.h
+@@ -65,6 +65,9 @@ class Renderer : public mir::renderer::Renderer
+     void set_viewport(mir::geometry::Rectangle const& rect) override;
+     void set_output_transform(glm::mat2 const&) override;
+     auto render(mir::graphics::RenderableList const&) const -> std::unique_ptr<mir::graphics::Framebuffer> override;
++#if (MIR_SERVER_MAJOR_VERSION > 2) || (MIR_SERVER_MAJOR_VERSION == 2 && MIR_SERVER_MINOR_VERSION >= 22)
++    void set_output_filter(MirOutputFilter filter) override { }
++#endif
+ 
+     // This is called _without_ a GL context:
+     void suspend() override;
+diff --git a/tests/mock_surface.h b/tests/mock_surface.h
+index 61737376..0b85b5cb 100644
+--- a/tests/mock_surface.h
++++ b/tests/mock_surface.h
+@@ -32,7 +32,9 @@ namespace test
+         MOCK_METHOD(void, initial_placement_done, (), (override));
+ #endif
+         MOCK_METHOD(mir::geometry::Displacement, content_offset, (), (const, override));
++#if (MIR_SERVER_MAJOR_VERSION > 2) || (MIR_SERVER_MAJOR_VERSION == 2 && MIR_SERVER_MINOR_VERSION <= 20)
+         MOCK_METHOD(std::shared_ptr<mir::frontend::BufferStream>, primary_buffer_stream, (), (const, override));
++#endif
+         MOCK_METHOD((mir::wayland::Weak<mir::frontend::WlSurface> const&), wayland_surface, (), (override));
+         MOCK_METHOD(bool, input_area_contains, (mir::geometry::Point const&), (const, override));
+         MOCK_METHOD(mir::input::InputReceptionMode, reception_mode, (), (const, override));
+@@ -89,6 +91,7 @@ namespace test
+ #if (MIR_SERVER_MAJOR_VERSION > 2) || (MIR_SERVER_MAJOR_VERSION == 2 && MIR_SERVER_MINOR_VERSION >= 21)
+         MOCK_METHOD(mir::Flags<MirTiledEdge>, tiled_edges, (), (const, override));
+         MOCK_METHOD(void, set_tiled_edges, (mir::Flags<MirTiledEdge>), (override));
++        MOCK_METHOD(std::list<mir::scene::StreamInfo>, get_streams, (), (const, override));
+ #endif
+     };
+ 
+diff --git a/tests/stub_surface.h b/tests/stub_surface.h
+index a9eb6cbf..9050ca34 100644
+--- a/tests/stub_surface.h
++++ b/tests/stub_surface.h
+@@ -33,11 +33,12 @@ class StubSurface : public mir::scene::Surface
+     {
+         return mir::geometry::Displacement();
+     }
+-
++#if (MIR_SERVER_MAJOR_VERSION > 2) || (MIR_SERVER_MAJOR_VERSION == 2 && MIR_SERVER_MINOR_VERSION <= 20)
+     auto primary_buffer_stream() const -> std::shared_ptr<mir::frontend::BufferStream> override
+     {
+         return std::shared_ptr<mir::frontend::BufferStream>();
+     }
++#endif
+ 
+     auto wayland_surface() -> mir::wayland::Weak<mir::frontend::WlSurface> const& override
+     {
+@@ -282,6 +283,10 @@ class StubSurface : public mir::scene::Surface
+ #if (MIR_SERVER_MAJOR_VERSION > 2) || (MIR_SERVER_MAJOR_VERSION == 2 && MIR_SERVER_MINOR_VERSION >= 21)
+     auto tiled_edges() const -> mir::Flags<MirTiledEdge> override { return mir::Flags { mir_tiled_edge_none }; }
+     void set_tiled_edges(mir::Flags<MirTiledEdge>) override { }
++    std::list<mir::scene::StreamInfo> get_streams() const override
++    {
++        return std::list<mir::scene::StreamInfo>();
++    }
+ #endif
+ };
+ }
