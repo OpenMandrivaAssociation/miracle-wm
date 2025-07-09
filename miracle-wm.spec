@@ -1,8 +1,8 @@
 #define _disable_lto 1
 
 Name:           miracle-wm
-Version:        0.5.2
-Release:        2
+Version:        0.6.0
+Release:        1
 Summary:        A tiling Wayland compositor based on Mir 
 Group:          Desktop/WM
 License:        GPL-3.0-or-later
