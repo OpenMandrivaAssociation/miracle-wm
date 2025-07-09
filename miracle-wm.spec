@@ -57,4 +57,6 @@ rm -rf %{buildroot}/usr/lib64/pkgconfig/gtest*
 %{_bindir}/miracle-wm-sensible-terminal
 %{_bindir}/miracle-wm-session
 %{_bindir}/miraclemsg
+# So far nothing use it. Let's spli it later.
+%{_libdir}/libmiracle-wm-config.so*
 %{_datadir}/wayland-sessions/miracle-wm.desktop
