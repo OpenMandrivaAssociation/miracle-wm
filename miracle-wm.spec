@@ -1,4 +1,6 @@
 #define _disable_lto 1
+%define libname %mklibname miracle-wm
+%define devname %mklibname -d miracle-wm
 
 Name:           miracle-wm
 Version:        0.6.1
@@ -25,6 +27,7 @@ BuildRequires:  desktop-file-utils
 BuildRequires:  boost-devel
 BuildRequires:  %{_lib}boost-core-devel
 BuildRequires:	gtest-devel
+Requires: %{libname} = %{EVRD}
 
 BuildSystem:  cmake
 BuildOption:  -DGTEST_INCLUDE_DIR=/usr/include/gtest/ 
@@ -36,6 +39,22 @@ miracle-wm is a Wayland compositor based on Mir. It features a tiling window
 manager at its core, very much in the style of i3 and sway. The intention is 
 to build a compositor that is flashier and more feature-rich than either of 
 those compositors, like swayfx.
+
+%package -n %{libname}
+Summary:        Shared library for %{name}
+
+%description -n %{libname}
+This package contains the shared library files.
+
+%package -n %{devname}
+Summary: Development files for %{name}
+Requires:	%{libname} = %{EVRD}
+Requires: %{name} = %{EVRD}
+Provides: %{name}-devel = %{EVRD}
+
+%description -n %{devname}
+This package contains development files for %{name}.
+
 
 %prep -a
 # Don't force gcc -- especially not while its LTO is broken and clang's works
@@ -57,6 +76,12 @@ rm -rf %{buildroot}/usr/lib64/pkgconfig/gtest*
 %{_bindir}/miracle-wm-sensible-terminal
 %{_bindir}/miracle-wm-session
 %{_bindir}/miraclemsg
-# So far nothing use it. Let's spli it later.
-%{_libdir}/libmiracle-wm-config.so*
 %{_datadir}/wayland-sessions/miracle-wm.desktop
+
+%files -n %{libname}
+%{_libdir}/libmiracle-wm-config.so.0*
+
+%files -n %{devname}
+%{_libdir}/libmiracle-wm-config.so
+%{_includedir}/miracle/
+%{_libdir}/pkgconfig/miracle-wm-config.pc
