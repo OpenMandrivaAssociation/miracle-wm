@@ -3,7 +3,7 @@
 %define devname %mklibname -d miracle-wm
 
 Name:           miracle-wm
-Version:        0.6.2
+Version:        0.7.1
 Release:        1
 Summary:        A tiling Wayland compositor based on Mir 
 Group:          Desktop/WM
