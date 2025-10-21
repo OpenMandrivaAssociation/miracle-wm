@@ -24,7 +24,7 @@ BuildRequires:  pkgconfig(json-c)
 BuildRequires:  pkgconfig(libnotify)
 BuildRequires:  pkgconfig(xkbcommon)
 BuildRequires:  desktop-file-utils
-BuildRequires:  boost-devel
+#BuildRequires:  boost-devel
 BuildRequires:  %{_lib}boost-core-devel
 BuildRequires:	gtest-devel
 Requires: %{libname} = %{EVRD}
