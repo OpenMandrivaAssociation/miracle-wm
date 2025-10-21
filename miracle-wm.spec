@@ -27,6 +27,7 @@ BuildRequires:  desktop-file-utils
 BuildRequires:  boost-devel
 BuildRequires:  %{_lib}boost-core-devel
 BuildRequires:	gtest-devel
+BuildRequires:  mold
 Requires: %{libname} = %{EVRD}
 
 BuildSystem:  cmake
