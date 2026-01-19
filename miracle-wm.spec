@@ -10,6 +10,7 @@ Group:          Desktop/WM
 License:        GPL-3.0-or-later
 URL:            https://github.com/mattkae/miracle-wm
 Source0:        https://github.com/mattkae/miracle-wm/archive/v%{version}/%{name}-%{version}.tar.gz
+Patch0:         https://patch-diff.githubusercontent.com/raw/canonical/mir/pull/4544.patch
 
 BuildRequires:  pkgconfig(miral)
 BuildRequires:  pkgconfig(egl)
