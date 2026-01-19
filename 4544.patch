@@ -1,0 +1,163 @@
+From 044dda5b6c0da458e2cd74f36526db69bb986671 Mon Sep 17 00:00:00 2001
+From: Matt Kosarek <matt.kosarek@canonical.com>
+Date: Sun, 14 Dec 2025 13:26:52 -0500
+Subject: [PATCH] Use PROJECT_VERSION instead of the old MIR_VERSION variables
+
+---
+ src/common/mircommon-internal.pc.in | 2 +-
+ src/common/mircommon.pc.in          | 2 +-
+ src/core/mircore.pc.in              | 2 +-
+ src/platform/mirplatform.pc.in      | 2 +-
+ src/server/mirserver-internal.pc.in | 2 +-
+ src/server/mirserver.pc.in          | 2 +-
+ src/server/version.h.in             | 6 +++---
+ src/wayland/mirwayland.pc.in        | 2 +-
+ tests/mirtest-internal.pc.in        | 2 +-
+ tests/mirtest.pc.in                 | 2 +-
+ 10 files changed, 12 insertions(+), 12 deletions(-)
+
+diff --git a/src/common/mircommon-internal.pc.in b/src/common/mircommon-internal.pc.in
+index 5bb9efd000b..0d1736d51cd 100644
+--- a/src/common/mircommon-internal.pc.in
++++ b/src/common/mircommon-internal.pc.in
+@@ -3,6 +3,6 @@ includedir=@PKGCONFIG_INCLUDEDIR@/mircommon-internal
+ 
+ Name: mircommon-internal
+ Description: Mir common internal headers
+-Version: @MIR_VERSION@
++Version: @PROJECT_VERSION@
+ Requires: mircommon mircore
+ Cflags: -I${includedir}
+diff --git a/src/common/mircommon.pc.in b/src/common/mircommon.pc.in
+index 9226fba9b01..1a22564a6b2 100644
+--- a/src/common/mircommon.pc.in
++++ b/src/common/mircommon.pc.in
+@@ -4,7 +4,7 @@ includedir=@PKGCONFIG_INCLUDEDIR@/mircommon
+ 
+ Name: mircommon
+ Description: Mir server library
+-Version: @MIR_VERSION@
++Version: @PROJECT_VERSION@
+ Requires: mircore, xkbcommon
+ Libs: -L${libdir} -lmircommon
+ Cflags: -I${includedir}
+diff --git a/src/core/mircore.pc.in b/src/core/mircore.pc.in
+index ef59c44c9a5..b474829fcab 100644
+--- a/src/core/mircore.pc.in
++++ b/src/core/mircore.pc.in
+@@ -4,6 +4,6 @@ includedir=@PKGCONFIG_INCLUDEDIR@/mircore
+ 
+ Name: mircore
+ Description: Mir core library
+-Version: @MIR_VERSION@
++Version: @PROJECT_VERSION@
+ Libs: -L${libdir} -lmircore
+ Cflags: -I${includedir}
+diff --git a/src/platform/mirplatform.pc.in b/src/platform/mirplatform.pc.in
+index 22ec75473a9..d9ad29cd1b4 100644
+--- a/src/platform/mirplatform.pc.in
++++ b/src/platform/mirplatform.pc.in
+@@ -4,7 +4,7 @@ includedir=@PKGCONFIG_INCLUDEDIR@
+ 
+ Name: mirplatform
+ Description: Mir platform library
+-Version: @MIR_VERSION@
++Version: @PROJECT_VERSION@
+ Requires: mircommon, mircore
+ Libs: -L${libdir} -lmirplatform
+ Cflags: -I${includedir}/mirplatform
+diff --git a/src/server/mirserver-internal.pc.in b/src/server/mirserver-internal.pc.in
+index 03c1247756f..c08d7388346 100644
+--- a/src/server/mirserver-internal.pc.in
++++ b/src/server/mirserver-internal.pc.in
+@@ -3,6 +3,6 @@ includedir=@PKGCONFIG_INCLUDEDIR@/mirserver-internal
+ 
+ Name: mirserver-internal
+ Description: Mir server internal headers
+-Version: @MIR_VERSION@
++Version: @PROJECT_VERSION@
+ Requires: mirserver mircommon mirplatform mircore
+ Cflags: -I${includedir}
+diff --git a/src/server/mirserver.pc.in b/src/server/mirserver.pc.in
+index 74e8eb41055..aad16946390 100644
+--- a/src/server/mirserver.pc.in
++++ b/src/server/mirserver.pc.in
+@@ -4,7 +4,7 @@ includedir=@PKGCONFIG_INCLUDEDIR@/mirserver
+ 
+ Name: mirserver
+ Description: Mir server library
+-Version: @MIR_VERSION@
++Version: @PROJECT_VERSION@
+ Requires.private: mircommon
+ Requires: mirplatform uuid mircore
+ Libs: -L${libdir} -lmirserver
+diff --git a/src/server/version.h.in b/src/server/version.h.in
+index 019339f1e4a..7b2cf72d76e 100644
+--- a/src/server/version.h.in
++++ b/src/server/version.h.in
+@@ -31,7 +31,7 @@
+  *
+  * See also: http://semver.org/
+  */
+-#define MIR_SERVER_MAJOR_VERSION (@MIR_VERSION_MAJOR@)
++#define MIR_SERVER_MAJOR_VERSION (@PROJECT_VERSION_MAJOR@)
+ 
+ /**
+  * MIR_SERVER_MINOR_VERSION
+@@ -41,7 +41,7 @@
+  *
+  * See also: http://semver.org/
+  */
+-#define MIR_SERVER_MINOR_VERSION (@MIR_VERSION_MINOR@)
++#define MIR_SERVER_MINOR_VERSION (@PROJECT_VERSION_MINOR@)
+ 
+ /**
+  * MIR_SERVER_MICRO_VERSION
+@@ -52,7 +52,7 @@
+  *
+  * This corresponds to the PATCH field of http://semver.org/
+  */
+-#define MIR_SERVER_MICRO_VERSION (@MIR_VERSION_PATCH@)
++#define MIR_SERVER_MICRO_VERSION (@PROJECT_VERSION_PATCH@)
+ 
+ /**
+  * MIR_SERVER_VERSION
+diff --git a/src/wayland/mirwayland.pc.in b/src/wayland/mirwayland.pc.in
+index 3b29594e727..8faf51fdf4c 100644
+--- a/src/wayland/mirwayland.pc.in
++++ b/src/wayland/mirwayland.pc.in
+@@ -4,7 +4,7 @@ includedir=@PKGCONFIG_INCLUDEDIR@/mirwayland
+ 
+ Name: mirwayland
+ Description: Mir Wayland library
+-Version: @MIR_VERSION@
++Version: @PROJECT_VERSION@
+ Requires: mircore wayland-server
+ Libs: -L${libdir} -lmirwayland
+ Cflags: -I${includedir}
+diff --git a/tests/mirtest-internal.pc.in b/tests/mirtest-internal.pc.in
+index e9a52d33262..d72540821fb 100644
+--- a/tests/mirtest-internal.pc.in
++++ b/tests/mirtest-internal.pc.in
+@@ -4,7 +4,7 @@ includedir=@PKGCONFIG_INCLUDEDIR@/mirtest-internal
+ 
+ Name: mirtest-internal
+ Description: Mir test assist internal library
+-Version: @MIR_VERSION@
++Version: @PROJECT_VERSION@
+ Requires: mirtest mirserver mirserver-internal
+ Libs: -L${libdir} -lmir-test-assist -lmir-test-assist-internal -ldl -lboost_filesystem -lboost_system
+ Cflags: -I${includedir}
+diff --git a/tests/mirtest.pc.in b/tests/mirtest.pc.in
+index ce31ec937cc..b3711c79b58 100644
+--- a/tests/mirtest.pc.in
++++ b/tests/mirtest.pc.in
+@@ -4,7 +4,7 @@ includedir=@PKGCONFIG_INCLUDEDIR@/mirtest
+ 
+ Name: mirtest
+ Description: Mir test assist library
+-Version: @MIR_VERSION@
++Version: @PROJECT_VERSION@
+ Requires: miral mirserver mirplatform mircommon
+ Libs: -L${libdir} -lmir-test-assist -ldl -lboost_filesystem -lboost_system
+ Cflags: -I${includedir}
