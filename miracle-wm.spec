@@ -80,13 +80,16 @@ rm -rf %{buildroot}/usr/lib64/pkgconfig/gtest*
 %{_bindir}/miracle-wm
 %{_bindir}/miracle-wm-sensible-terminal
 %{_bindir}/miracle-wm-session
+%{_bindir}/miracle-wm-basic-error-reporter
+%{_bindir}/miracle-wm-debug-overlay
 %{_bindir}/miraclemsg
 %{_datadir}/wayland-sessions/miracle-wm.desktop
+%{_datadir}/miracle-wm/
 
 %files -n %{libname}
-%{_libdir}/libmiracle-wm-config.so.0*
+%{_libdir}/libmiracle-wm-c.so.0*
 
 %files -n %{devname}
-%{_libdir}/libmiracle-wm-config.so
+%{_libdir}/libmiracle-wm-c.so
 %{_includedir}/miracle/
-%{_libdir}/pkgconfig/miracle-wm-config.pc
+%{_libdir}/pkgconfig/miracle-wm-c.pc
